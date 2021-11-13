@@ -7,6 +7,7 @@
         public static int SizeXY { get; set; }
         static byte[,] Puzzel;
         static System.Collections.ArrayList Container = new System.Collections.ArrayList();
+        static System.Collections.ArrayList Container_Won = new System.Collections.ArrayList();
         static void Main(string[] args)
         {
             ForegroundColor = ConsoleColor.Blue;
@@ -33,12 +34,17 @@
         {
             
             Checker ck = new Checker();
-            if (ck.Sotoni(Pz) == false && ck.Zarbdari(Pz) == false)
+            if (ck.Sotoni(Pz) == false && ck.Zarbdari(Pz) == false && !Container_Won.Contains(Pz))
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Found a pattern for 8-Queen");
                 PrintPuzzel(Pz);
+                if(!Container_Won.Contains(Pz) || !Container.Contains(Pz))
+                {
+                    Container.Add(Pz);
+                    Container_Won.Add(Pz);
+                }
                 Console.WriteLine("\n\tPress any key to continue ...");
                 Console.ReadKey();
             }
@@ -63,7 +69,7 @@
                 //Puzzel[6, 4] = 1;
                 //Puzzel[7, 1] = 1;
                 PrintPuzzel(Puzzel);
-                if (!Container.Contains(Puzzel))
+                if (!Container.Contains(Puzzel) && !Container_Won.Contains(Puzzel))
                 {
                     Container.Add(Puzzel);
                     CheckPlus(Puzzel);
